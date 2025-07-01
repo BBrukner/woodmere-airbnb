@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Woodmere Waterfront Home | Airbnb Style Listing</title>
+  <style>
+    /* Basic Reset & Fonts */
+    body, html {
+      margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+        Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+      background: #fff; color: #222;
+      line-height: 1.4;
+    }
+    a {
+      color: #FF385C; /* Airbnb pink */
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    /* Header & Footer */
+    header, footer {
+      background: #fff;
+      border-bottom: 1px solid #ddd;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    header h1 {
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: #FF385C;
+      cursor: pointer;
+    }
+    footer {
+      border-top: 1px solid #ddd;
+      font-size: 0.9rem;
+      color: #666;
+      justify-content: center;
+    }
+
+    /* Container */
+    .container {
+      max-width: 980px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    /* Gallery */
+    .gallery {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .gallery-main {
+      width: 100%;
+      max-height: 500px;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgb(0 0 0 / 0.15);
+      cursor: pointer;
+      user-select: none;
+    }
+    .thumbnails {
+      margin-top: 0.8rem;
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+    .thumbnails img {
+      width: 80px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 8px;
+      opacity: 0.7;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: opacity 0.3s, border-color 0.3s;
+    }
+    .thumbnails img:hover,
+    .thumbnails img.active {
+      opacity: 1;
+      border-color: #FF385C;
+    }
+
+    /* Title & Host */
+    h2.title {
+      font-weight: 700;
+      font-size: 2rem;
+      margin-bottom: 0.25rem;
+    }
+    .location {
+      color: #717171;
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .host-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .host-photo {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 2px 6px rgb(0 0 0 / 0.2);
+    }
+    .host-details {
+      font-size: 1rem;
+    }
+    .host-details strong {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    /* Price & Booking */
+    .price {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      color: #FF385C;
+    }
+    .book-btn {
+      background-color: #FF385C;
+      color: white;
+      border: none;
+      padding: 0.75rem 2rem;
+      font-size: 1.1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgb(255 56 92 / 0.3);
+      transition: background-color 0.3s ease;
+      margin-bottom: 3rem;
+    }
+    .book-btn:hover {
+      background-color: #e32e56;
+    }
+
+    /* Amenities */
+    .amenities, .offers, .map-section {
+      margin-bottom: 3rem;
+      border-top: 1px solid #ddd;
+      padding-top: 2rem;
+    }
+    .amenities h3, .offers h3 {
+      font-weight: 700;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .amenities ul {
+      list-style: none;
+      padding-left: 0;
+      columns: 2;
+      column-gap: 3rem;
+    }
+    .amenities li {
+      margin-bottom: 0.6rem;
+      position: relative;
+      padding-left: 24px;
+    }
+    .amenities li::before {
+      content: "✅";
+      position: absolute;
+      left: 0;
+      top: 0;
+      font-size: 16px;
+      line-height: 1;
+    }
+
+    /* Icon Grid - What this place offers */
+    .offers .icon-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill,minmax(120px,1fr));
+      gap: 20px;
+      margin-top: 1rem;
+    }
+    .offers .icon-grid div {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #484848;
+      user-select: none;
+    }
+    .offers .icon-grid img {
+      width: 40px;
+      margin-bottom: 8px;
+      filter: invert(28%) sepia(57%) saturate(369%) hue-rotate(326deg) brightness(93%) contrast(90%);
+    }
+
+    /* Map */
+    .map-section iframe {
+      width: 100%;
+      height: 300px;
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgb(0 0 0 / 0.15);
+    }
+
+    /* Animations */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.8s ease-out;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Responsive */
+    @media(max-width: 600px) {
+      .amenities ul {
+        columns: 1;
+      }
+      .host-info {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .thumbnails img {
+        width: 60px;
+        height: 45px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1 onclick="window.location.href='https://www.airbnb.com'">Airbnb</h1>
+    <nav>
+      <a href="https://www.airbnb.com/s/Woodmere--NY--United-States/homes">Back to listings</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <!-- Photo Gallery -->
+    <section class="gallery" aria-label="Photo gallery of Woodmere waterfront home">
+      <img src="house1.jpg" alt="Front view of the Woodmere waterfront home" class="gallery-main" id="mainPhoto" />
+      <div class="thumbnails" role="list">
+        <img src="house1.jpg" alt="Thumbnail front view" onclick="swap(0)" role="listitem" />
+        <img src="house2.jpg" alt="Thumbnail living room" onclick="swap(1)" role="listitem" />
+        <img src="house3.jpg" alt="Thumbnail backyard" onclick="swap(2)" role="listitem" />
+        <img src="house4.jpg" alt="Thumbnail sunset view" onclick="swap(3)" role="listitem" />
+      </div>
+    </section>
+
+    <!-- Title & Location -->
+    <h2 class="title">Stunning Waterfront Home in Woodmere, NY</h2>
+    <p class="location">685 Barnard Ave, Woodmere, NY 11598</p>
+
+    <!-- Host Info -->
+    <section class="host-info" aria-label="Host information">
+      <img src="host.jpg" alt="Host Shoshana" class="host-photo" />
+      <div class="host-details">
+        <strong>Hosted by Shoshana</strong>
+        <span>Superhost · Joined 2019</span>
+      </div>
+    </section>
+
+    <!-- Price & Booking -->
+    <p class="price">$2,490 / night</p>
+    <button class="book-btn" aria-label="Book this home now">Reserve</button>
+
+    <!-- Amenities -->
+    <section class="amenities fade-in" aria-label="Amenities and features of the home">
+      <h3>Amenities</h3>
+      <ul>
+        <li><strong>Waterfront property</strong> — killer view from the Great Room</li>
+        <li>5 bedrooms · 3 full baths</li>
+        <li>Fully equipped kitchen</li>
+        <li>Home office & cozy living room</li>
+        <li>High-speed Wi‑Fi & Smart TV</li>
+        <li>Central air conditioning</li>
+        <li>Private backyard with <strong>firepit</strong></li>
+        <li><strong>Electric car charger</strong> (additional charges apply)</li>
+        <li>Trampoline in backyard</li>
+        <li>One-car garage & driveway parking</li>
+        <li>Access to fishing pier (0.25 mi) & golf courses (within 2 mi)</li>
+        <li>Crib available on request</li>
+        <li>Pet friendly – <strong>reptiles only please 🦎</strong></li>
+      </ul>
+    </section>
+
+    <!-- What this place offers -->
+    <section class="offers fade-in" aria-label="What this place offers">
+      <h3>What this place offers</h3>
+      <div class="icon-grid">
+        <div><img src="icons/waterfront.svg" alt="Waterfront property icon" /><span>Waterfront view</span></div>
+        <div><img src="icons/ev.svg" alt="Electric car charger icon" /><span>EV Charger</span></div>
+        <div><img src="icons/firepit.svg" alt="Firepit icon" /><span>Firepit</span></div>
+        <div><img src="icons/trampoline.svg" alt="Trampoline icon" /><span>Trampoline</span></div>
+        <div><img src="icons/fishing.svg" alt="Fishing pier icon" /><span>Fishing Pier (0.25 mi)</span></div>
+        <div><img src="icons/golf.svg" alt="Golf course icon" /><span>Golf courses (within 2 mi)</span></div>
+        <div><img src="icons/crib.svg" alt="Crib icon" /><span>Crib on request</span></div>
+        <div><img src="icons/pet.svg" alt="Pet friendly icon" /><span>Pet friendly (reptiles only)</span></div>
+      </div>
+    </section>
+
+    <!-- Map -->
+    <section class="map-section fade-in" aria-label="Map showing location of home">
+      <h3>Location</h3>
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3021.466027776691!2d-73.70845398459486!3d40.61543397933105!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2811bd6f2b011%3A0x581fa93f12d140bc!2s685%20Barnard%20Ave%2C%20Woodmere%2C%20NY%2011598!5e0!3m2!1sen!2sus!4v1688195708493!5m2!1sen!2sus"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Map location of 685 Barnard Ave, Woodmere, NY"
+      ></iframe>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Airbnb, Inc. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Photo gallery functionality
+    const photos = ["house1.jpg", "house2.jpg", "house3.jpg", "house4.jpg"];
+    function swap(i) {
+      const mainPhoto = document.getElementById("mainPhoto");
+      mainPhoto.src = photos[i];
+      document.querySelectorAll(".thumbnails img").forEach((img, idx) => {
+        img.classList.toggle("active", idx === i);
+      });
+    }
+    swap(0); // Set initial active photo
+
+    // Animate fade-in on scroll
+    window.addEventListener("scroll", () => {
+      document.querySelectorAll(".fade-in").forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 100) {
+          el.classList.add("visible");
+        }
+      });
+    });
+    // Trigger animation on load as well
+    window.dispatchEvent(new Event("scroll"));
+  </script>
+</body>
+</html>
