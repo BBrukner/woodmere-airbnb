@@ -3,20 +3,53 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Charming 5‑Bed Home in Woodmere</title>
+  <title>Spacious 5‑Bed Home in Woodmere</title>
   <style>
     body { margin:0; font-family: Arial, sans-serif; color:#222; }
+
+    /* Airbnb-like header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 30px;
+      border-bottom: 1px solid #e0e0e0;
+      background: white;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    header h1 {
+      font-size: 24px;
+      color: #ff5a5f;
+      margin: 0;
+    }
+    nav a {
+      margin-left: 20px;
+      color: #333;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+
     .hero { width:100%; height:500px; background:url('house.jpg') center/cover no-repeat; }
+
     .container { max-width:900px; margin:20px auto; padding:0 20px; }
     .title-section { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; }
     h1 { font-size:28px; margin:10px 0; }
     .price { font-size:24px; color:#ff5a5f; }
     .location { color:#717171; }
+
     .host { display:flex; align-items:center; margin:20px 0; }
     .host img { border-radius:50%; width:60px; height:60px; margin-right:15px; }
+
     .description { margin:20px 0; line-height:1.6; }
+
     .amenities ul { list-style:none; padding:0; }
     .amenities li { margin:8px 0; }
+
     .booking-box {
       border:1px solid #ddd; padding:20px; max-width:300px; float:right;
     }
@@ -26,13 +59,53 @@
       width:100%; padding:12px; background:#ff5a5f; color:#fff;
       border:none; cursor:pointer;font-size:16px;
     }
+
+    /* Footer styling */
+    footer {
+      background: #f7f7f7;
+      padding: 30px 40px;
+      margin-top: 80px;
+      font-size: 14px;
+      color: #484848;
+      border-top: 1px solid #ddd;
+    }
+    footer .footer-columns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+    }
+    footer .footer-columns div {
+      min-width: 150px;
+    }
+    footer h4 {
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    /* Map section */
+    .map {
+      margin: 40px 0;
+    }
+
     @media (max-width:768px) {
       .booking-box { float:none; width:100%; margin-top:20px; }
+      .footer-columns { flex-direction: column; gap: 20px; }
     }
   </style>
 </head>
 <body>
 
+  <!-- Header -->
+  <header>
+    <h1>airbnb</h1>
+    <nav>
+      <a href="#">Places to stay</a>
+      <a href="#">Experiences</a>
+      <a href="#">Online Experiences</a>
+    </nav>
+  </header>
+
+  <!-- Hero Image -->
   <div class="hero"></div>
 
   <div class="container">
@@ -66,12 +139,44 @@
       </ul>
     </div>
 
+    <!-- Embedded Google Map -->
+    <div class="map">
+      <h3>Location</h3>
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3027.1226361276184!2d-73.71265418459426!3d40.63274097933983!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c261b19b71e225%3A0xbecf8616e86c156a!2s685%20Barnard%20Ave%2C%20Woodmere%2C%20NY%2011598!5e0!3m2!1sen!2sus!4v1624924895845!5m2!1sen!2sus"
+        width="100%"
+        height="350"
+        style="border:0;"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+
     <div class="booking-box">
       <h2>$2,490/night</h2>
       <p>Up to 10 guests · 5 beds · 3 baths</p>
       <button>Request to Book</button>
     </div>
   </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-columns">
+      <div>
+        <h4>Support</h4>
+        <p>Help Center<br>Safety information<br>Cancellation options</p>
+      </div>
+      <div>
+        <h4>Hosting</h4>
+        <p>Try hosting<br>Responsible hosting<br>Community Center</p>
+      </div>
+      <div>
+        <h4>About</h4>
+        <p>Newsroom<br>Learn about new features<br>Careers</p>
+      </div>
+    </div>
+  </footer>
 
 </body>
 </html>
